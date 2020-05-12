@@ -61,7 +61,7 @@ def job_start(key, uri, input_file, output_file, more={}):
  
 
     headers = {
-        'x-api-key': key,
+        'x-apikey': key,
         'Content-Type': 'application/json',
         'Accept': 'application/json'
         }
@@ -108,7 +108,7 @@ def job_result(key, uri, job_id, wait=0, noretry=False):
  
 
     headers = {
-        'x-api-key': key,
+        'x-apikey': key,
         'Content-Type': 'application/json',
         'Accept': 'application/json'
         }
