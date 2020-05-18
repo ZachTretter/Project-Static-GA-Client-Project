@@ -1,32 +1,64 @@
 ## Problem Statement
 
-In an emergency event like a hurricane or a terrorist attack having the ability to identify hot spots where people are most affected could help first responders best allocate their resources. A visual tool that maps these affected areas could be very useful.
+Prompt : Using live police radio reports for real time identification of people needing assistance.
 
+“Currently, FEMA identifies areas that require immediate attention (for search and rescue efforts) either by responding to reports and requests put directly by the public or, recently, using social media posts. This tool will utilize live police radio reports to identify hot spots representing locations of people who need immediate attention. The tool will flag neighborhoods or specific streets where the police and first-respondents were called to provide assistance related to the event.”
 
-## Data Science Question
+------------
+
+## Data Science Questions
 
 Is it feasible to build a tool that pulls in live audio data from a police scanner and outputs locations of emergencies on a map?
+* What geographic and situational information is provided by (live) police radio?
+* How can this information be displayed on a map?
+
+-------------
+
+## Conclusions
+
+#### Limitations in Raw Data Impact Utility of an Automated Speech-to-Text-to-Location Tool
+
+Police radio provides some geographic information
+* Translating radio to discrete information inhibited by
+  * Poor audio quality of raw feed
+  * Inherent limitations of speech-to-text tools
+* Mapping of geographic information in radio transcript obfuscated by
+  * Unintelligibility of police chatter to layman
+  * Ambiguity of street names in an urban area
+  * Uncertainty of precise location even with a clear address
+
+-------------
 
 ## Table of Contents
 
 #### Code Folder
 
-- **00_Scrape_Streets.ipynb** - Data collection. Code to scrape greater Boston area street names from 'geographic.org'
-- **01_Broadcastify_Audio_Download_FINAL.ipynb** - Data Collection. Code to pull historic police scanner audio files from the 'Broadcastify' archives.
-- **02_audio_cleaning_functions_FINAL.ipynb** - Audio Processing. Code to run the Broadcastify audio files through the Dolby sound cleaning API.
-- **03_split_audio_FINAL.ipynb** - Audio Processing. Code to split the cleaned Broadcatify audio files on silence leaving only portions with an audible voice.
-- **04_Speech_to_Text_via_googleAPI_FINAL.ipynb** - Audio Processing. Code to transcribe the cleaned and split Broadcastify audio files into text using Google's speech to text API.
-- **05_Identify_Addresses_in_Transcript_FINAL.ipynb** - NLP. Code to pull possible addresses from the transcribed text.
-- **06_Geocode_Mapping_FINAL.ipynb** - Mapping. Code to take addresses from NLP and map them using longitude and latitude.
+|File Name|Role|Scope|
+|:-------------------------|:-------------------------|:-------------------------|
+|00_Scrape_Streets.ipynb|Data Collection|Scrape greater Boston area street names|
+|01_Broadcastify_Audio_Download_FINAL.ipynb|Data Collection|Pull historic police scanner audio files from the 'Broadcastify' archives|
+|02_audio_cleaning_functions_FINAL.ipynb|Audio Processing|Run the Broadcastify audio files through the Dolby sound cleaning API|
+|03_split_audio_FINAL.ipynb|Audio Processing|Split the cleaned Broadcatify audio files on silence leaving only portions with an audible voice|
+|04_Speech_to_Text_via_googleAPI_FINAL.ipynb|Audio Processing|Transcribe the cleaned and split Broadcastify audio files into text using Google's speech to text API|
+|05_Identify_Addresses_in_Transcript_FINAL.ipynb|Natural Language Processing|Identify possible addresses from the transcribed text|
+|06_Geocode_Mapping_FINAL.ipynb|Geocoding & Mapping|Geocode addresses and map them|
+
+
+--------------
 
 #### Datasets Folder
 
-- **ancillary_csv** - Scraped street names and police codes
-- **enhanced_audio** - Enhanced audio files
-- **geocodes** - Latitude and Longitude data for Boston and Watertown
-- **raw_audio** - Raw audio files from Broadcastify archives
-- **split_audio** - Processed audio files
-- **transcripts** - Voice to text transcripts
+|File Name|Type|Content|Product of Workbook #|Used in Workbook #|
+|:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|
+|ancillary_csv|Folder|Scraped street names and police codes|0|5|
+|enchanced_audio|Folder|Enhanced audio files|2|3|
+|geocodes|Folder|Geocodes Boston and Watertown transcript addresses|6|6|
+|raw_audio|Folder|Raw audio files from Broadcastify archives|1|2|
+|split_audio|Folder|Processed audio files|3|4|
+|transcripts|Folder|Voice to text transcripts|4|5|
+|dataframe_final.csv|csv|Dataframe with transcript and addresses|5|6|
+
+--------------
 
 ## Data and Process Overview
 
@@ -40,6 +72,7 @@ The transcribed text was then processed using 'NLTK' 'RegexpTokenizer' to break 
 
 The full street names pulled from the transcribed audio were then transformed into longitudinal and latitudinal coordinates and mapped using the 'folium' library.
 
+--------------
 
 ## Required Software
 
